@@ -4,10 +4,17 @@ Exercícios de álbegra relacional
 
 Considere o Banco de Dados descrito abaixo:
 
-EMPREGADO (cod_empregado, nome_empregado, rua, cidade, salario)
-TRABALHA (cod_empregado, CNPJ)
-COMPANHIA (CNPJ, nome_companhia, cidade)
-GERENTE(cod_empregado, cod_companhia)
+EMPREGADO 
+(cod_empregado, nome_empregado, rua, cidade, salario)
+
+TRABALHA 
+(cod_empregado, CNPJ)
+
+COMPANHIA 
+(CNPJ, nome_companhia, cidade)
+
+GERENTE
+(cod_empregado, cod_companhia)
 
 Para cada uma das seguintes consultas dê a expressão em álgebra relacional:
 
