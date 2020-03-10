@@ -1,0 +1,54 @@
+DROP TABLE IF EXISTS GERENTE;
+DROP TABLE IF EXISTS TRABALHA;
+DROP TABLE IF EXISTS COMPANHIA;
+DROP TABLE IF EXISTS EMPREGADO;
+
+CREATE TABLE public."Empregado"
+(
+    cod_empregado integer,
+    nome_empregado character varying(50),
+    rua character varying(50),
+    cidade character varying(50),
+    salario double precision,
+    PRIMARY KEY (cod_empregado)
+);
+
+CREATE TABLE public."Companhia"
+(
+    "CNPJ" character varying(14) NOT NULL,
+    nome_companhia character varying(50),
+    cidade character varying(50),
+    PRIMARY KEY ("CNPJ")
+);
+
+CREATE TABLE public."Trabalha"
+(
+    "CNPJ" character varying(14) COLLATE pg_catalog."default" NOT NULL,
+    cod_empregado integer NOT NULL,
+    CONSTRAINT "Trabalha_pkey" PRIMARY KEY ("CNPJ", cod_empregado),
+    CONSTRAINT "FK_Companhia" FOREIGN KEY ("CNPJ")
+        REFERENCES public."Companhia" ("CNPJ") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "FK_Empregado" FOREIGN KEY (cod_empregado)
+        REFERENCES public."Empregado" (cod_empregado) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
+CREATE TABLE public."Gerente"
+(
+    cod_empregado integer NOT NULL,
+    cod_companhia character varying(14) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "Gerente_pkey" PRIMARY KEY (cod_empregado, cod_companhia),
+    CONSTRAINT "FK_Companhia" FOREIGN KEY (cod_companhia)
+        REFERENCES public."Companhia" ("CNPJ") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_Empregado" FOREIGN KEY (cod_empregado)
+        REFERENCES public."Empregado" (cod_empregado) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
